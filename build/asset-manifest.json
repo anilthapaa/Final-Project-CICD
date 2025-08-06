@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/Final-Project-CICD/static/js/main.d62c94e8.js",
+    "index.html": "/Final-Project-CICD/index.html",
+    "main.d62c94e8.js.map": "/Final-Project-CICD/static/js/main.d62c94e8.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d62c94e8.js"
+  ]
+}
