@@ -1,0 +1,19 @@
+---
+- name: Update apt cache and upgrade packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+    autoremove: yes
+    autoclean: yes
+
+- name: Install unattended-upgrades package
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Enable unattended upgrades
+  copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";

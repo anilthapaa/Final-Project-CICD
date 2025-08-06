@@ -1,0 +1,13 @@
+---
+- name: Create a new user
+  user:
+    name: "{{ new_user }}"
+    groups: sudo,docker
+    shell: /bin/bash
+    state: present
+    create_home: yes
+
+- name: Set authorized SSH key for the new user
+  authorized_key:
+    user: "{{ new_user }}"
+    key: "{{ lookup('file', ssh_pub_key_path) }}"
