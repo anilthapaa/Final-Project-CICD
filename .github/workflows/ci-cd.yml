@@ -68,12 +68,11 @@ jobs:
         with:
           playbook: ansible/react-nginx/main.yml
           inventory: ansible/inventory.ini
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          user: ${{ secrets.SSH_USER }}
+          
           options: |
             --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest"
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: false
-          ANSIBLE_REMOTE_USER: ${{ secrets.SSH_USER }}
-          ANSIBLE_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 
       # - name: Install Ansible
