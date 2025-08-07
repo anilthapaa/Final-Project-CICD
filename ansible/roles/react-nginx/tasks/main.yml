@@ -6,7 +6,7 @@
 
 - name: Copy project files to remote server
   synchronize:
-    src: ../../..
+    src: "{{ playbook_dir }}/../.."
     dest: /home/{{ ansible_user }}/weather-app
     rsync_opts:
       - "--exclude=node_modules"
