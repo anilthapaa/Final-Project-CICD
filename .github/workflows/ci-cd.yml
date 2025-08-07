@@ -73,13 +73,14 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
           chmod 600 .ansible_key
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
           
       - name: Run Ansible playbook
         run: |
           cd ansible
           ansible-playbook -i inventory.yml playbook.yml \
             --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest" \
-            -e "ansible_host=${{ secrets.SSH_USER }}" \
+            -e "ansible_host=${{ secrets.HOST }}" \
 
 
 
