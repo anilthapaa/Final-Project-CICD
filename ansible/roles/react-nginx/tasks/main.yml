@@ -4,19 +4,17 @@
     state: directory
     mode: '0755'
 
-- name: Copy project files to remote server
-  synchronize:
-    src: "{{ playbook_dir }}/../.."
-    dest: /home/{{ ansible_user }}/weather-app
-    rsync_opts:
-      - "--exclude=node_modules"
-      - "--exclude=.git"
+# - name: Copy project files to remote server
+#   synchronize:
+#     src: "{{ playbook_dir }}/../.."
+#     dest: /home/{{ ansible_user }}/weather-app
+#     rsync_opts:
+#       - "--exclude=node_modules"
+#       - "--exclude=.git"
 
-- name: Build Docker image for React app
+- name: Pull Docker image from registry
   become: yes
-  shell: docker build -t react-nginx-app -f Dockerfile .
-  args:
-    chdir: /home/{{ ansible_user }}/weather-app/Final_Project_CICD
+  shell: docker pull ghcr.io/anilthapaa/react-nginx-app:latest
 
 - name: Stop and remove existing container if running
   become: yes
