@@ -56,7 +56,7 @@ jobs:
           docker push ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest
 
   deploy:
-    name: Deploy to Azure VM
+    name: Deploy to AWS VM
     needs: build-and-push-image
     runs-on: ubuntu-latest
 
@@ -64,41 +64,41 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+          
       - name: Write SSH private key to file
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
           chmod 600 .ansible_key
-
-      - name: Show inventory file
-        run: cat ansible/inventory.ini
-
-      - name: Run Ansible Playbook
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: ansible/playbook.yml
-          inventory: ansible/inventory.ini
-          key: .ansible_key
           
-          options: |
-           --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest"
+      - name: Run Ansible playbook
+        run: |
+          cd ansible
+          ansible-playbook -i inventory.yml playbook.yml \
+            --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest" \
+            -e "ansible_host=${{ secrets.SSH_USER }}" \
 
 
 
-      # - name: Install Ansible
+      # - name: Write SSH private key to file
       #   run: |
-      #     sudo apt update
-      #     sudo apt install -y ansible
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
+      #     chmod 600 .ansible_key
+
+
+      # - name: Run Ansible Playbook
+      #   uses: dawidd6/action-ansible-playbook@v2
+      #   with:
+      #     playbook: ansible/playbook.yml
+      #     inventory: ansible/inventory.ini
+      #     key: .ansible_key
           
-      # - name: Setup SSH key
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key.pem
-      #     chmod 400 ~/.ssh/key.pem
-      #     ssh-keyscan -H ${{ secrets.UBUNTU_HOST }} >> ~/.ssh/known_hosts
-          
-      # - name: Run Ansible playbook
-      #   run: |
-      #     cd ansible
-      #     ansible-playbook -i inventory.yml playbook.yml \
-      #       --extra-vars "docker_image=$DOCKER_IMAGE" \
-      #       -e "ansible_host=${{ secrets.UBUNTU_HOST }}"
+      #     options: |
+      #      --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest"
+
+
+
+
