@@ -26,7 +26,7 @@ jobs:
       - name: Build React app
         run:  npm run build
         env:
-         REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
+          REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
 
       - name: Run tests with coverage
         run: npm test -- --coverage
@@ -84,25 +84,3 @@ jobs:
           ansible-playbook -i inventory.yml playbook.yml \
             --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest ssh_pub_key_content='${{ secrets.SSH_PUB_KEY }}'" \
             -e "ansible_host=${{ secrets.HOST }}" \
-
-
-
-      # - name: Write SSH private key to file
-      #   run: |
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
-      #     chmod 600 .ansible_key
-
-
-      # - name: Run Ansible Playbook
-      #   uses: dawidd6/action-ansible-playbook@v2
-      #   with:
-      #     playbook: ansible/playbook.yml
-      #     inventory: ansible/inventory.ini
-      #     key: .ansible_key
-          
-      #     options: |
-      #      --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest"
-
-
-
-
