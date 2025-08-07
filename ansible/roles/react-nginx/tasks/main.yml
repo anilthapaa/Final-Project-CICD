@@ -13,6 +13,13 @@
       - "--exclude=.git"
       - "--exclude=build"
 
+- name: List files on remote
+  shell: ls -l /home/{{ ansible_user }}/weather-app
+  register: ls_output
+
+- debug:
+    var: ls_output.stdout_lines
+
 - name: Build Docker image for React app
   become: yes
   shell: docker build -t react-nginx-app /home/{{ ansible_user }}/weather-app
