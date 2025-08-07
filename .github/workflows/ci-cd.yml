@@ -73,7 +73,7 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
           chmod 600 .ansible_key
-          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SSH_PRIVATE_KEY }}
           
       - name: Run Ansible playbook
         run: |
