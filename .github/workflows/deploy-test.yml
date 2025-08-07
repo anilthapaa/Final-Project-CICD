@@ -23,7 +23,9 @@ jobs:
       run: npm test -- --watchAll=false
 
     - name: Build React app
-      run: REACT_APP_OPEN_WEATHER_API_KEY=${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }} npm run build
+      run:  npm run build
+      env:
+       REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
