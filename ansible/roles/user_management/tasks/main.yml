@@ -10,4 +10,4 @@
 - name: Set authorized SSH key for the new user
   authorized_key:
     user: "{{ new_user }}"
-    key: "{{ lookup('file', ssh_pub_key_path) }}"
+    key: "{{ ssh_pub_key_content }}"
