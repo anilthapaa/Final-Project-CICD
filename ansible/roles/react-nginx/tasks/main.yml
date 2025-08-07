@@ -14,9 +14,9 @@
 
 - name: Build Docker image for React app
   become: yes
-  shell: docker build -t react-nginx-app /home/{{ ansible_user }}/weather-app/Final-Project-CICD
-  # args:
-  #   chdir: /home/{{ ansible_user }}/weather-app
+  shell: docker build -t react-nginx-app -f Dockerfile .
+  args:
+    chdir: /home/{{ ansible_user }}/weather-app/Final_Project_CICD
 
 - name: Stop and remove existing container if running
   become: yes
