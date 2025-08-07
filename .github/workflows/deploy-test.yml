@@ -27,6 +27,12 @@ jobs:
       env:
        REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
 
+    - name: Print API Key (debug only!)
+      run: echo "API Key is $REACT_APP_OPEN_WEATHER_API_KEY"
+      env:
+       REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
+
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
