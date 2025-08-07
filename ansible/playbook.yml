@@ -13,7 +13,7 @@
     - system_update
     - firewall
     - ssh_hardening
-    - user_management
     - docker
+    - user_management
     - react-nginx
 
