@@ -22,11 +22,17 @@ jobs:
     - name: Run tests
       run: npm test -- --watchAll=false
 
-    - name: Build project
+    - name: Build React app
       run: npm run build
+      
+    - name: Inject API Key
+      run: npm run inject
+      env:
+        REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build
+        clean: true
