@@ -26,11 +26,14 @@ jobs:
       - name: Run unit tests
         run: npm test -- --watchAll=false
 
+      - name: Inject OpenWeather API Key
+        run: echo "REACT_APP_OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> $GITHUB_ENV
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: junit.xml
+          path: unit.xml
 
   build-and-push-image:
     name: Build & Push Docker Image
