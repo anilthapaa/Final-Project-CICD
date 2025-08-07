@@ -6,22 +6,12 @@
 
 - name: Copy project files to remote server
   synchronize:
-    src: ../../..   # Adjust path if needed
+    src: ../../../..
     dest: /home/{{ ansible_user }}/weather-app
     rsync_opts:
       - "--exclude=node_modules"
       - "--exclude=.git"
       - "--exclude=build"
-
-- name: Check if Dockerfile exists
-  stat:
-    path: /home/{{ ansible_user }}/weather-app/Dockerfile
-  register: dockerfile_check
-
-- name: Fail if Dockerfile is missing
-  fail:
-    msg: "Dockerfile not found in /home/{{ ansible_user }}/weather-app"
-  when: not dockerfile_check.stat.exists
 
 - name: Build Docker image for React app
   become: yes
