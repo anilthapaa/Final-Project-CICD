@@ -1,5 +1,4 @@
----
-- name: Ensure project directory exists
+- name: Ensure weather-app directory exists
   file:
     path: /home/{{ ansible_user }}/weather-app
     state: directory
@@ -7,21 +6,36 @@
 
 - name: Copy project files to remote server
   synchronize:
-    src: ../../..
+    src: ../../..   # Adjust path if needed
     dest: /home/{{ ansible_user }}/weather-app
     rsync_opts:
       - "--exclude=node_modules"
       - "--exclude=.git"
       - "--exclude=build"
 
+- name: Check if Dockerfile exists
+  stat:
+    path: /home/{{ ansible_user }}/weather-app/Dockerfile
+  register: dockerfile_check
+
+- name: Fail if Dockerfile is missing
+  fail:
+    msg: "Dockerfile not found in /home/{{ ansible_user }}/weather-app"
+  when: not dockerfile_check.stat.exists
+
 - name: Build Docker image for React app
+  become: yes
   shell: docker build -t react-nginx-app /home/{{ ansible_user }}/weather-app
+  args:
+    chdir: /home/{{ ansible_user }}/weather-app
 
 - name: Stop and remove existing container if running
+  become: yes
   shell: |
     docker stop react-app || true
     docker rm react-app || true
   ignore_errors: true
 
 - name: Run Docker container to serve React app via NGINX
+  become: yes
   shell: docker run -d -p 80:80 --name react-app react-nginx-app
