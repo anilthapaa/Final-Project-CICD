@@ -23,17 +23,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run unit tests
-        run: npm test -- --watchAll=false
-
       - name: Inject OpenWeather API Key
         run: echo "REACT_APP_OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> $GITHUB_ENV
+
+      - name: Create test results directory
+        run: mkdir -p test-results
+
+      - name: Run unit tests
+        run: npm test -- --watchAll=false
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: unit.xml
+          path: test-results/unit.xml
 
   build-and-push-image:
     name: Build & Push Docker Image
@@ -67,7 +70,7 @@ jobs:
       - name: Write SSH private key to file
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
-          chmod 400 .ansible_key
+          chmod 600 .ansible_key
 
       - name: Run Ansible Playbook
         uses: dawidd6/action-ansible-playbook@v2
