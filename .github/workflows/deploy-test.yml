@@ -20,7 +20,7 @@ jobs:
       run: npm install
 
     - name: Create .env from secret
-      run: echo "OPENWEATHER_API_KEY=${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}" > .env
+      run: echo "REACT_APP_OPEN_WEATHER_API_KEY=${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}" > .env
 
     - name: Build React app
       run:  npm run build
