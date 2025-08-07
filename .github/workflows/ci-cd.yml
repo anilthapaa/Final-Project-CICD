@@ -69,11 +69,12 @@ jobs:
           sudo apt update
           sudo apt install -y ansible
           
-      - name: Write SSH private key to file
+      - name: Setup SSH key
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ansible_key
-          chmod 600 .ansible_key
-          ssh-keyscan -H ${{ secrets.SSH_PRIVATE_KEY }}
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key.pem
+          chmod 400 ~/.ssh/key.pem
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
           
       - name: Run Ansible playbook
         run: |
