@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 
-const isDev = process.env.NODE_ENV === "development";
-
 export default function WeatherFetcher() {
   const [city, setCity] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
 
+const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
-  const apiKey = isDev
-  ? process.env.REACT_APP_OPEN_WEATHER_API_KEY
-  : "__API_KEY_PLACEHOLDER__";
-
-
+if (!apiKey) {
+  console.warn("Warning: REACT_APP_OPEN_WEATHER_API_KEY is not set!");
+}
 
   async function fetchWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
