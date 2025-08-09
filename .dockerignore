@@ -4,8 +4,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# React build output - don't include local builds in image build context
-build
 
 # Git files and folders
 .git
@@ -20,8 +18,6 @@ Dockerfile
 
 # Env files (you'll inject env vars differently)
 .env
-.env.local
-.env.*.local
 
 # Misc
 *.log
