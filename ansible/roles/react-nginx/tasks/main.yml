@@ -26,5 +26,5 @@
 - name: Run Docker container to serve React app via NGINX
   become: yes
   shell: docker run -d -p 80:80 --name react-app \
-         -e API_KEY=${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }} \
+         -e API_KEY=${{ API_KEY }} \
          ghcr.io/anilthapaa/react-nginx-app:latest
