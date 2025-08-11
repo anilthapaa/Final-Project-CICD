@@ -1,7 +1,7 @@
 {
   "name": "weather-react-app",
   "version": "1.0.0",
-  "description": "Weather app using React",
+  "description": "Weather App using React",
   "homepage": "/",
   "main": "index.js",
   "scripts": {
