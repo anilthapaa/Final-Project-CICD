@@ -83,5 +83,7 @@ jobs:
         run: |
           cd ansible
           ansible-playbook -i inventory.yml playbook.yml \
-            --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest ssh_pub_key_content='${{ secrets.SSH_PUB_KEY }}'" \
+            --extra-vars "docker_image=ghcr.io/${{ github.repository_owner }}/react-nginx-app:latest \
+                         ssh_pub_key_content='${{ secrets.SSH_PUB_KEY }}'" \
+                         API_KEY='${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}' \
             -e "ansible_host=${{ secrets.HOST }}" \
