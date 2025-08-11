@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "https://anilthapaa.github.io/Final-Project-CICD/static/js/main.6065ee98.js",
+    "index.html": "https://anilthapaa.github.io/Final-Project-CICD/index.html",
+    "main.6065ee98.js.map": "https://anilthapaa.github.io/Final-Project-CICD/static/js/main.6065ee98.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.6065ee98.js"
+  ]
+}
